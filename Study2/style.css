@@ -1,9 +1,0 @@
-* {
-    margin: 20;
-    padding: 20;
-    box-sizing: border-box;
-} 
-
-#canvas {
-    border: 5 px solid black;
-}
