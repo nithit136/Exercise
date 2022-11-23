@@ -1,0 +1,172 @@
+<script src="mark I.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mark I_style.css">
+</head>
+
+
+    <div>
+        <div style="text-align:center;">
+            <canvas id="myCanvas"  width="600" height="400" style="cursor:default;border:1px solid;outline-width:2px;outline-color:#000000">
+            </canvas>
+        </div>
+        <p id="instr"></p>
+    </div>
+    <script src="mark I.js"></script>
+     
+    <div id="instructions">
+        <h2>This task is a Color memory task. 
+            <br> Please only do 1 HIT of this task, do not repeat it.</h2>
+        <p>This HIT will take approximately 8-10 minutes. You will have to remember a pair of color and report one of them <b>as accurate as possible</b> by clicking on a color wheel. Please do not participate if you have any form of color blindness or do not have normal or corrected-to-normal vision (wearing glasses or contacts is fine). During the HIT, you'll perform 108 trials of the same task; each trial lasts about 3-5 seconds.<p>
+        
+        <p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b> 
+        <br> Press <b>F11</b> to go full screen on a Windows PC
+        </p>
+        <p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to participate. </p>
+        <div id="startExperimentButton">
+        <a href="#" id="startExperiment">Start Experiment</a>
+        </div>
+    </div>
+
+    <div id='practiceFrame2'; class='trialDiv'>
+        <p> 
+        <br> You'll see something like this but only briefly (less than a second). 
+        <br> You might find it a little challenging sometime. Don't worry and just try your best.
+    
+        <br> <br> Please press <b>space bar</b> to continue the demo.</p>
+    </div>
+
+    <div id='practiceFrame3'; class='trialDiv'>
+        <p> 
+        <br> Then, the colors will disappear for short(less than a second) or long period(seconds).
+    
+        <br> <br> Please press <b>space bar</b> to continue.</p>
+    </div>
+
+    <div id='practiceFrame4'; class='trialDiv'>
+        <p> 
+        <br> Once the colorwheel come up, you will have to report the correct hue at one of the location (pointed by the arrow).
+    
+        <br> <br> Please try to move your mouse around the colorwheel and <b>left-click</b> to make a response.</p>
+    </div>
+
+    <script>
+        let myCanvas = document.getElementById("myCanvas")
+        let ctx = myCanvas.getContext('2d')
+        let  centerX=myCanvas.width/2;
+        let centerY=myCanvas.height/2;  
+
+        //PractiseFrame 1
+        
+        //make crosshair
+        function practiceFrame1() {
+            // if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
+                $('#instructions').show();
+                $('#practiceFrame2').hide();
+                $('#practiceFrame3').hide();
+                $('#practiceFrame4').hide();
+                myCanvas.style.border = 'solid'
+                makeCrosshair();
+                drawObjects(ctx,objects)
+            
+              $(document).on("keypress.trialWait", PressedKey);
+
+                function PressedKey(evt) {
+                	evt.preventDefault(); 
+                    if (evt.which == 32) {
+                        practiceFrame2();
+                    }
+                }
+        }
+        // }
+        
+        practiceFrame1()
+
+        
+        //PracticeFrame 2
+        function practiceFrame2(){
+             erase(ctx)
+             $('#instructions').hide();
+            //show practiceFrame2
+            $('#practiceFrame2').show();
+            $('#practiceFrame3').hide();
+            $('#practiceFrame4').hide();
+            //make circle   
+            let numDots = 8;
+            let xPos=[];
+            let yPos=[];
+            let area = [1.6,1.76,1.94,2.13,2.34,2.58,2.83,3.12]
+
+            function makeCircles(){
+                // Draw circles
+                for(i=0;i<numDots;i++){
+                makeCircle('dot'+i,20*i,30*i, area[i]*10 ,false,0,'#000000','#000000');
+                // makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
+                // makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
+                 }
+             }
+
+            makeCircles();
+            drawObjects(ctx,objects);
+            
+            $(document).on("keypress.trialWait", PressedKey);
+
+            function PressedKey(evt) {
+                evt.preventDefault(); 
+                if (evt.which == 32) {
+                practiceFrame3();
+                }
+            }   
+
+        }
+
+        //PracticeFrame 3
+        function practiceFrame3(){
+            erase(ctx)
+            $('#instructions').hide();
+            $('#practiceFrame2').hide();
+            $('#practiceFrame3').show();
+            $('#practiceFrame4').hide();
+
+            $(document).on("keypress.trialWait", PressedKey);
+            function PressedKey(evt) {
+                	evt.preventDefault(); 
+                    if (evt.which == 32) {
+                        practiceFrame4();
+                    }
+                }
+        }
+
+        //PracticeFrame 4
+        function practiceFrame4(){
+            erase(ctx)
+            $('#instructions').hide();
+            $('#practiceFrame2').hide();
+            $('#practiceFrame3').hide();
+            $('#practiceFrame4').show();
+            
+            // ///Adjust the size of circle
+            // makeCircle('dot',100,150, 30 ,false,0,'#000000','#000000')
+            // drawCircle(ctx,circle)
+
+            
+            generateRandomCircle()
+        }
+
+
+
+    </script>
+
+
+
+</body>
+</html>

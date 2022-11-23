@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="study3.css">
+    <script src="study3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    
+
+
+</head>
+<body>
+    <div id="instructions" style="text-align:center">
+        <h2>This task is a circle-size memory task. 
+            <br> Please only do 1 HIT of this task, do not repeat it.</h2>
+        <p>This task will take approximately 15-20 minutes. You will have to remember the size of the circles and report one of them <b>as accurate as possible</b> by dragging your mouse on a sliding bar to adjust the size of circle. 
+            <br>Please do not participate if you do not have normal or corrected-to-normal vision (wearing glasses or contacts is fine). During the HIT, you'll perform 110 trials of the same task; each trial takes about 6-10 seconds.<p>
+        
+        <!-- <p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b>  -->
+        <br> Press <b>F11</b> to go full screen on a Windows PC
+        </p>
+        <p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to participate. </p>
+        <div id="startExperimentButton">
+        <button id="startExperiment">Start Experiment</button>
+        </div>
+    </div>
+
+    <div id='practiceFrame2'style="text-align:center">
+        <p> 
+        <br> You'll see something like this but only briefly (less than two seconds). 
+        <br> You might find it a little challenging sometime. Don't worry and just try your best.
+    
+        <br> <br> Please click <b>next</b> to continue the demo.</p>
+    </div>
+
+    <div id='practiceFrame3'style="text-align:center">
+        <p> 
+        <br> Then, the circles will disappear for short period.
+    
+        <br> <br> Please click <b>next</b> to continue.</p>
+    </div>
+
+    <div id='practiceFrame4'style="text-align:center">
+        <p> 
+        <br> Once the circle comes up, you will have to adjust its size to match the correct size of the circle at that location.
+    
+        <br> <br> Please try to drag your mouse on a sliding bar to adjust the size of circle and <b>click submit button</b> to make a response and do the next trial.</p>
+    </div>
+
+    <div id="endTask">
+        <br>All done, <b>Thank you!</b> please click submit button.
+    </div>
+
+    <div id="grid-container" class="grid-container">
+        <div id=box1; class="grid-item"></div>
+        <div id="box2"; class="grid-item"></div>
+        <div id="box3"; class="grid-item"></div>
+        <div id="box4"; class="grid-item"></div>
+        <div id="box5"; class="grid-item"></div>
+        <div id="box6"; class="grid-item"></div>
+        <div id="box7"; class="grid-item"></div>
+        <div id="box8"; class="grid-item"></div>
+        <div id="box9"; class="grid-item"></div>
+        <div id="box10"; class="grid-item"></div>
+        <div id="box11"; class="grid-item"></div>
+        <div id="box12"; class="grid-item"></div>
+        <div id="box13"; class="grid-item"></div>
+        <div id="box14"; class="grid-item"></div>
+        <div id="box15"; class="grid-item"></div>
+        <div id="box16"; class="grid-item"></div>
+        <div id="box17"; class="grid-item"></div>
+        <div id="box18"; class="grid-item"></div>
+        <!-- <div id="box19"; class="grid-item"></div>
+        <div id="box20"; class="grid-item"></div>
+        <div id="box21"; class="grid-item"></div>
+        <div id="box22"; class="grid-item"></div>
+        <div id="box23"; class="grid-item"></div>
+        <div id="box24"; class="grid-item"></div> -->
+    </div>
+
+    <div id="fixation-screen" class="square" style="text-align:center">+</div>
+    <div id="visual-mask" class="square" style="text-align:center"><img src="https://www.publicdomainpictures.net/pictures/210000/velka/tv-noise.jpg"></div>
+
+    <div id="slideContainer" class="slideContainer" >
+        <p>Circle size:<span id="value"></span></p>
+        <input type="range" min="5" max="50" value="15" id="myRange" class ="slider">
+    </div>
+    <button id="nextPage">next</button>
+    <button id="nextPage2">next</button>
+    <button id="submitButton">submit</button>
+    <button id="submitTask">Submit Task</button>
+    <input type="submit" value="Submit" name="submitTask" id="submitTask" style="display: none">
+
+    <script>
+        $('#grid-container').hide();
+        $('#fixation-screen').hide();
+        $('#slideContainer').hide();
+        $('#practiceFrame2').hide();
+        $('#practiceFrame3').hide();
+        $('#practiceFrame4').hide();
+        $('#visual-mask').hide();
+        $('#submitButton').hide();
+        $('#nextPage').hide();
+        $('#nextPage2').hide();
+        $('#submitTask').hide();
+        $('#endTask').hide();
+
+        let area = [1.6,1.76,1.94,2.13,2.34,2.58,2.83,3.12]
+        let setArea = [ [2.13,1.6,1.76,1.94,2.34,2.58,2.83,3.12],
+                        [2.13,1.76,1.94,1.94,1.94,2.6,2.85,3.14],
+                        [2.13,1.94,1.94,1.94,1.94,1.94,3.08,3.39],
+                        [2.13,1.69,1.86,2.05,2.58,2.58,2.58,2.83],
+                        [2.13,1.56,1.71,2.58,2.58,2.58,2.58,2.58],
+                        [1.76,1.94,1.94,1.94,2.13,2.34,2.58,2.83],
+                        [1.94,1.94,1.94,2.13,2.42,2.67,2.93,3.23],
+                        [1.94,1.94,1.94,1.94,2.13,2.81,3.1,3.4],
+                        [1.76,1.94,2.13,2.34,2.34,2.34,2.58,2.83],
+                        [1.42,1.56,1.72,2.13,2.34,2.34,2.34,2.58],
+                        [1.49,1.64,1.81,2.13,2.34,2.34,2.34,2.34]
+                    ]
+        let setArea2 = setArea.map(function(subarray) {
+            return subarray.map(function(number) {
+            return number * 1.1;})
+        })
+        
+        let setArea3 = setArea.map(function(subarray) {
+            return subarray.map(function(number) {
+            return number * 0.9;})
+        })
+
+        let setArea4 = setArea.map(function(subarray) {
+            return subarray.map(function(number) {
+            return number * 0.8;})
+        })
+        
+        let setArea5 = setArea.map(function(subarray) {
+            return subarray.map(function(number) {
+            return number * 1.2;})
+        })
+        
+
+
+        let totalSetArea = setArea.concat(setArea2, setArea3, setArea4, setArea5);
+        
+        
+        function practiceFrame1() {
+            // if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
+                $('#instructions').show();
+    
+                let startExperiment = document.querySelector('#startExperiment');
+                startExperiment.addEventListener("click",function(){
+                        practiceFrame2();
+                    })
+        }
+
+        practiceFrame1()
+
+        //PracticeFrame 2
+        
+            ///To assess location of each circle
+        var boxSequence = [];
+        
+
+        function practiceFrame2(){
+            $('#instructions').hide();
+            //show practiceFrame2
+            $('#practiceFrame2').show();
+            $('#grid-container').show();  
+            $('#nextPage').show();
+
+            let area = [1.6,1.76,1.94,2.13,2.34,2.58,2.83,3.12]
+            var $boxNumber = $('.grid-item');
+            var boxNum = $boxNumber.eq(Math.floor(Math.random()*($boxNumber.length - 1)))
+            
+            //To get location in X-axis & Y-axis of each circle
+            circleX =[];
+            circleY=[];
+            setCircleX=[];
+            setCircleY=[];
+            function generateRandomCircle(){
+                for (let i=0; i<8; i++){
+                var $boxNumber = $('.grid-item');
+                var boxNum = randomValueFromArray($boxNumber);
+                var canvas = $('<canvas width="120" height="150"></canvas>');
+                $(boxNum).append(canvas);
+                var ctx = canvas[0].getContext('2d'); 
+                circleX = generateRandom(50, 70)
+                circleY = generateRandom(65, 85)   
+                makeCircle('id',circleX,circleY, area[i]*13 ,false,0,'#000000','#000000');
+                drawCircle(ctx,circle);    
+                boxSequence.push(boxNum);
+                setCircleX.push(circleX);
+                setCircleY.push(circleY);   
+                }
+            }
+            
+
+            generateRandomCircle();
+
+            // $(document).on("keypress.trialWait", PressedKey);
+            // function PressedKey(evt) {
+            //     evt.preventDefault(); 
+            //     if (evt.which == 32) {
+            //     practiceFrame3();  
+                               
+            //     }
+            // }
+            
+            let nextPage = document.querySelector('#nextPage');
+            nextPage.addEventListener("click",function(){
+                practiceFrame3();
+                // preventDefault(); 
+           })
+
+        }
+        
+
+        
+        //PracticeFrame 3
+        function practiceFrame3(){
+            $('#practiceFrame2').hide();
+            $('#practiceFrame3').show();
+            $('#nextPage').hide();
+            $('#nextPage2').show();
+            
+            //remove circle
+            $('.grid-item').empty();   
+            $('#grid-container').hide();
+
+            $('#visual-mask').show();
+            // $(document).on("keypress.trialWait", PressedKey);
+            // function PressedKey(evt) {
+            //     	evt.preventDefault(); 
+            //         if (evt.which == 32) {
+            //             practiceFrame4();                        
+            //         }
+            //     }     
+            let nextPage2 = document.querySelector('#nextPage2');
+            nextPage2.addEventListener("click",function(){
+                    practiceFrame4();
+                    // preventDefault(); 
+           })           
+        }
+
+        
+
+
+
+        //PracticeFrame 4
+        var canvas = $('<canvas width="120" height="150"></canvas>');
+        function practiceFrame4(){
+            $('#practiceFrame3').hide();
+            $('#nextPage2').hide();
+            $('#visual-mask').hide();
+            $('#grid-container').show();
+            $('#practiceFrame4').show();
+            $('#slideContainer').show();
+            $('#submitButton').show();
+            
+            
+            
+
+            function createTargetCircle(){
+                let SldrVal = document.getElementById("myRange").value
+                let boxSequence2 = boxSequence.slice(0,9)
+                targetCircle = boxSequence2[0];
+                $(targetCircle).append(canvas);
+                var ctx = canvas[0].getContext('2d');
+                ctx.clearRect(0, 0, 120, 150);
+                ctx.beginPath();
+                ctx.arc(setCircleX[0], setCircleX[0], SldrVal, 0, 2 * Math.PI);
+                ctx.fill();
+                // getValue=[];
+                // getValue.push(SldrVal)
+
+
+                respondCircle =requestAnimationFrame(createTargetCircle)
+                
+                // console.log(boxSequence2)
+                
+            }
+            
+            createTargetCircle()
+            
+           let submit = document.querySelector('#submitButton');
+           submit.addEventListener("click",function(){
+                cancelAnimationFrame(respondCircle);
+                $('.grid-item').empty();
+                runTrial();
+           })
+
+
+        }
+
+        finalValue = [];
+        // to save study information and responses      
+        var trialStruct = [];
+       
+       //To get reaction time
+        let timeUse=[];
+        let timeDif=[];
+        
+
+        //Start Trial
+        function startTrial(){
+        
+            boxSequence=[];
+            boxSequence2=[];
+            // console.log(boxSequence)
+            setCircleX=[];
+            setCircleY=[];    
+            // console.log(trialOrder)
+
+            let delay= [500, 1000,1500] 
+            iti = delay[Math.floor(Math.random()*delay.length)];
+            console.log(iti);
+
+            cancelAnimationFrame(respondCircle);
+            $('.grid-item').empty();
+            $('#grid-container').hide();  
+            $('#practiceFrame4').hide();
+            $('#slideContainer').hide();
+            $('#fixation-screen').show();
+            $('#submitButton').hide();
+           
+            
+
+            setTimeout(function(){
+                boxSequence=[];
+                boxSequence2=[];
+                circleX =[];
+                circleY=[];
+                //Inter trial interval
+                
+                
+                $('#fixation-screen').hide();
+                $('#grid-container').show();
+                
+                for (let i=0; i<8; i++){
+                    var $boxNumber = $('.grid-item');
+                    var boxNum = randomValueFromArray($boxNumber);
+                    var canvas = $('<canvas width="120" height="150"></canvas>');
+                    $(boxNum).append(canvas);
+                    var ctx = canvas[0].getContext('2d');  
+                    circleX = generateRandom(50, 70);
+                    circleY = generateRandom(65, 85)  
+                    makeCircle('id',circleX,circleY, trialOrder[i]*10 ,false,0,'#000000','#000000');
+                    drawCircle(ctx,circle);    
+                    boxSequence.push(boxNum);  
+                    setCircleX.push(circleX);
+                    setCircleY.push(circleY); 
+                    // console.log(setCircleX)
+                }
+                // generateRandomCircle(trialOrder);
+                console.log(boxSequence)
+                // console.log(boxSequence2); 
+            }
+            , iti)
+           
+
+            setTimeout(function(){
+                $('.grid-item').empty();
+                $('#grid-container').hide();
+                $('#visual-mask').show();
+            },iti+2000)
+
+            setTimeout(function(){
+                $('#visual-mask').hide();
+                $('#grid-container').show();
+                startTime(); 
+
+                function createTargetCircle(){
+                    let SldrVal = document.getElementById("myRange").value
+                    let boxSequence2 = boxSequence.slice(0,9)
+                    targetCircle = boxSequence2[0];
+                    $(targetCircle).append(canvas);
+                    var ctx = canvas[0].getContext('2d');
+                    ctx.clearRect(0, 0, 120, 150);
+                    ctx.beginPath();
+                    ctx.arc(setCircleX[0], setCircleX[0], SldrVal, 0, 2 * Math.PI);
+                    ctx.fill();
+                    getValue=[];
+                    getValue.push(SldrVal)
+                    
+
+                    respondCircle =requestAnimationFrame(createTargetCircle)
+                }
+                createTargetCircle();
+                $('#slideContainer').show();
+                $('#submitButton').show();
+                
+
+                let submit = document.querySelector('#submitButton');
+                submit.addEventListener("click",function(){
+                    cancelAnimationFrame(respondCircle);
+                    //To get size of submit circle 
+                    finalValue.push(getValue.slice(-1))
+                    console.log(finalValue)
+                    //To get reaction time
+                    endTime();
+                    // console.log(timeDif);
+                    $('.grid-item').empty();
+                    timeUse.push(timeDif)
+                    console.log(timeUse)
+                
+        }, {once : true})},iti+3000)
+
+        }
+
+        let nTrials = totalSetArea.length *2 +1;
+        var curTrial = 0;
+        //To get information about task sequence
+        let taskSequence =[];
+        
+        let trialOrder =[];
+        let getValue=[];
+        let iti=[]
+
+        function runTrial() {
+            
+            // Set up
+            $('#grid-container').hide();
+            $('#fixation-screen').show();
+            $('#slideContainer').hide();
+            $('#submitButton').hide();
+            document.getElementById("myRange").value=10
+            
+            
+            // console.log(curTrial)
+            // console.log(trialOrder);
+            // console.log(boxSequence)
+            // console.log(setCircleX)
+            // console.log(setCircleY)
+            // console.log(getValue.slice(-1))
+            // console.log(endTime())
+            // console.log(timeUse)
+            console.log(iti);
+
+
+            var curtrialStruct = {};
+            // need to edit these information
+            curtrialStruct.curTrial = curTrial;
+            curtrialStruct.trialOrder= trialOrder;
+            curtrialStruct.totalBoxSequence = boxSequence;
+            curtrialStruct.totalSetCircleX = setCircleX;
+            curtrialStruct.totalSetCircleY = setCircleY;
+            curtrialStruct.totalGetValue = getValue.slice(-1);
+            curtrialStruct.rt = endTime();
+            curtrialStruct.totalTimeUse = timeUse;
+            curtrialStruct.totaliti= iti;
+            
+            trialStruct.push(curtrialStruct);
+            console.log(trialStruct);
+
+
+            curTrial = curTrial+1 ; 
+            console.log(curTrial)
+
+            if (curTrial >= nTrials){
+                Done();
+                
+            } else {
+                // boxSequence=[];
+                // boxSequence2=[];
+                
+                trialOrder = randomValueFromArray(totalSetArea)
+                console.log(trialOrder)
+                
+                taskSequence.push(trialOrder)
+                console.log(taskSequence)
+                startTrial();
+            }
+        }
+
+
+        function Done() {
+
+            cancelAnimationFrame(respondCircle);
+            $('.grid-item').empty();
+            $('#grid-container').hide();
+            $('#fixation-screen').hide();
+            $('#slideContainer').hide();
+            $('#submitButton').hide();
+            
+
+            var dataToServer = {};
+            dataToServer.id = getParameterByName("subjectId"); /* getParameterByName("code") */
+            dataToServer.experimenter = 'Chaipat';
+            dataToServer.experimentName = 'Ensemble bias WM';
+            dataToServer.curData = JSON.stringify(trialStruct);
+            $.post("https://psyc241.ucsd.edu/Turk/save.php", dataToServer, AfterSuccessDataSaving).fail(AfterFailedSaving);
+        }
+
+        function AfterSuccessDataSaving() {
+            
+            // After they are done, send them here:
+            // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
+            $('#submitTask').show();
+            $('#endTask').show();
+
+            console.log("Saved!");
+
+            let finalSubmit = document.querySelector('#submitTask');
+                finalSubmit.addEventListener("click",function(){
+                    $('#submitTask').hide();
+                    $('#endTask').hide();
+                    alert("Saved!");
+           })
+
+        }
+
+        function AfterFailedSaving() {
+          console.log("oops, failed to save");
+
+          // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");  
+          $('#submitTask').show();
+          $('#endTask').show();
+
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+
+</body>
+</html>
