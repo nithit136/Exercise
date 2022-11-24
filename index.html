@@ -368,11 +368,17 @@
                 $('.grid-item').empty();
                 $('#grid-container').hide();
                 $('#visual-mask').show();
-            },iti+2000)
+            },iti+1500)
 
             setTimeout(function(){
+                // $('.grid-item').empty();
+                // $('#grid-container').hide();
                 $('#visual-mask').hide();
                 $('#grid-container').show();
+            },iti+1650)
+
+            setTimeout(function(){
+                // $('#grid-container').show();
                 startTime(); 
 
                 function createTargetCircle(){
@@ -409,7 +415,7 @@
                     timeUse.push(timeDif)
                     console.log(timeUse)
                 
-        }, {once : true})},iti+3000)
+        }, {once : true})},iti+2500)
 
         }
 
