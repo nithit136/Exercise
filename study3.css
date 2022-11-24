@@ -31,8 +31,8 @@
 
 .grid-container {
     display: grid;
-    height: 46s0px;
-    width: 760px;
+    height: 450px;
+    width: 740px;
     margin: auto;
     margin-top: 150px;
     position: relative;
@@ -81,8 +81,8 @@
 
 .square {
     background-color: #ffffff;
-    width: 770px;
-    height: 470px;
+    width: 750px;
+    height: 460px;
     border-style: solid;
     border-color: black;
     margin: auto;
@@ -91,8 +91,8 @@
 }
 
 .square img{
-  width: 770px;
-  height: 470px;
+  width: 750px;
+  height: 460px;
 }
 
 
