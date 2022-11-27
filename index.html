@@ -321,6 +321,7 @@
             iti = delay[Math.floor(Math.random()*delay.length)];
             console.log(iti);
 
+
             cancelAnimationFrame(respondCircle);
             $('.grid-item').empty();
             $('#grid-container').hide();  
@@ -421,14 +422,22 @@
 
         let nTrials = totalSetArea.length *2 +1;
         var curTrial = 0;
-        //To get information about task sequence
-        let taskSequence =[];
+
         
         let trialOrder =[];
         let getValue=[];
         let iti=[];
         let initialTargetCircleSize =[];
 
+        ///To random order of task 
+        let totalTrialSequence = [];
+        for (let i=0; i<110; i++){
+            trialRandomSequence = randomValueFromArray(totalSetArea);
+            totalTrialSequence.push(trialRandomSequence);
+        }
+       console.log(totalTrialSequence)
+
+       
         function runTrial() {
             
             // Set up
@@ -477,7 +486,7 @@
                 // boxSequence=[];
                 // boxSequence2=[];
                 
-                trialOrder = randomValueFromArray(totalSetArea)
+                trialOrder = totalTrialSequence[curTrial-1];
                 console.log(trialOrder)
 
                ///Random reappeared target circle 
@@ -485,8 +494,6 @@
                 document.getElementById("myRange").value= initialTargetCircleSize
                 // console.log(initialTargetCircleSize)
 
-                taskSequence.push(trialOrder)
-                console.log(taskSequence)
                 startTrial();
             }
         }
