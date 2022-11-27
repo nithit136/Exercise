@@ -89,7 +89,7 @@
 
     <div id="slideContainer" class="slideContainer" >
         <p>Circle size:<span id="value"></span></p>
-        <input type="range" min="5" max="50" value="15" id="myRange" class ="slider">
+        <input type="range" min="5" max="50" step='0.25' value="15" id="myRange" class ="slider">
     </div>
     <button id="nextPage">next</button>
     <button id="nextPage2">next</button>
@@ -283,7 +283,7 @@
                 respondCircle =requestAnimationFrame(createTargetCircle)
                 
                 // console.log(boxSequence2)
-                
+                // console.log(SldrVal)
             }
             
             createTargetCircle()
