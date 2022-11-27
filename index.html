@@ -249,9 +249,6 @@
         }
 
         
-
-
-
         //PracticeFrame 4
         var canvas = $('<canvas width="120" height="150"></canvas>');
         function practiceFrame4(){
@@ -342,11 +339,9 @@
                 $('#fixation-screen').hide();
                 $('#grid-container').show();
                 
-                // console.log(trialOrder);
-                console.log(taskSize);
                 for (let i=0; i<8; i++){
                     var $boxNumber = $('.grid-item');
-                    var boxNum = randomValueFromArray($boxNumber);
+                    var boxNum = randomBoxFromArray($boxNumber);
                     var canvas = $('<canvas width="120" height="150"></canvas>');
                     $(boxNum).append(canvas);
                     var ctx = canvas[0].getContext('2d');  
@@ -361,6 +356,8 @@
                 }
                 // generateRandomCircle(trialOrder);
                 console.log(boxSequence)
+                //To clear previous box order
+                alreadyDoneBox = [];
                 // console.log(boxSequence2); 
             }
             , iti)
@@ -488,15 +485,13 @@
                 // boxSequence=[];
                 // boxSequence2=[];
                 
-                //??
-                trialOrder = randomValueFromArray(totalSetArea)
+                
+                // trialOrder = randomValueFromArray(totalSetArea)
                 // console.log(trialOrder)
 
                 taskSize = totalTrialSequence[curTrial-1]
                 console.log(taskSize)
                 
-
-
                ///Random reappeared target circle 
                 initialTargetCircleSize = generateRandom(10, 40)
                 document.getElementById("myRange").value= initialTargetCircleSize

@@ -287,4 +287,25 @@ function endTime(){
 
 
 
+var alreadyDoneBox = [];
+// Function picking random values from array
+const randomBoxFromArray = (myArray) => {
+  // If alreadyDone is empty then fill it will indexes equal
+  // to the size of myArray
+  if (alreadyDoneBox.length === 0) {
+      for (var i = 0; i < myArray.length; i++) alreadyDoneBox.push(i);
+  }
+  // Generate random number within the range of 
+  // length of alreadyDone array
+  var randomValueIndex = Math.floor(Math.random() * alreadyDoneBox.length);
 
+  // Getting unaccessed index of myArray using above 
+  // random number
+  var indexOfItemInMyArray = alreadyDoneBox[randomValueIndex];
+  // remove this index from alreadyDone array because
+  // we are accessing it now.
+  alreadyDoneBox.splice(randomValueIndex, 1);
+  // Get the value
+  // console.log(alreadyDoneBox)
+  return myArray[indexOfItemInMyArray];
+};    
