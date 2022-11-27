@@ -321,7 +321,6 @@
             iti = delay[Math.floor(Math.random()*delay.length)];
             console.log(iti);
 
-
             cancelAnimationFrame(respondCircle);
             $('.grid-item').empty();
             $('#grid-container').hide();  
@@ -343,6 +342,8 @@
                 $('#fixation-screen').hide();
                 $('#grid-container').show();
                 
+                // console.log(trialOrder);
+                console.log(taskSize);
                 for (let i=0; i<8; i++){
                     var $boxNumber = $('.grid-item');
                     var boxNum = randomValueFromArray($boxNumber);
@@ -351,7 +352,7 @@
                     var ctx = canvas[0].getContext('2d');  
                     circleX = generateRandom(50, 70);
                     circleY = generateRandom(65, 85)  
-                    makeCircle('id',circleX,circleY, trialOrder[i]*10 ,false,0,'#000000','#000000');
+                    makeCircle('id',circleX,circleY, taskSize[i]*10 ,false,0,'#000000','#000000');
                     drawCircle(ctx,circle);    
                     boxSequence.push(boxNum);  
                     setCircleX.push(circleX);
@@ -423,21 +424,22 @@
         let nTrials = totalSetArea.length *2 +1;
         var curTrial = 0;
 
+        // let taskSequence =[];
         
         let trialOrder =[];
         let getValue=[];
         let iti=[];
         let initialTargetCircleSize =[];
+        let taskSize =[];
 
-        ///To random order of task 
+        //To random order of task
         let totalTrialSequence = [];
         for (let i=0; i<110; i++){
             trialRandomSequence = randomValueFromArray(totalSetArea);
             totalTrialSequence.push(trialRandomSequence);
         }
-       console.log(totalTrialSequence)
+        console.log(totalTrialSequence)
 
-       
         function runTrial() {
             
             // Set up
@@ -462,7 +464,6 @@
             var curtrialStruct = {};
             // need to edit these information
             curtrialStruct.curTrial = curTrial;
-            curtrialStruct.trialOrder= trialOrder;
             curtrialStruct.totalBoxSequence = boxSequence;
             curtrialStruct.totalSetCircleX = setCircleX;
             curtrialStruct.totalSetCircleY = setCircleY;
@@ -471,6 +472,7 @@
             curtrialStruct.totalTimeUse = timeUse;
             curtrialStruct.totaliti= iti;
             curtrialStruct.initialTargetCircleSize = initialTargetCircleSize;
+            curtrialStruct.taskSize = taskSize
             
             trialStruct.push(curtrialStruct);
             console.log(trialStruct);
@@ -486,14 +488,21 @@
                 // boxSequence=[];
                 // boxSequence2=[];
                 
-                trialOrder = totalTrialSequence[curTrial-1];
-                console.log(trialOrder)
+                trialOrder = randomValueFromArray(totalSetArea)
+                // console.log(trialOrder)
+
+                taskSize = totalTrialSequence[curTrial-1]
+                console.log(taskSize)
+                
+
 
                ///Random reappeared target circle 
                 initialTargetCircleSize = generateRandom(10, 40)
                 document.getElementById("myRange").value= initialTargetCircleSize
                 // console.log(initialTargetCircleSize)
 
+                // taskSequence.push(trialOrder)
+                // console.log(taskSequence)
                 startTrial();
             }
         }
