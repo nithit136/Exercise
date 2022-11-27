@@ -426,7 +426,8 @@
         
         let trialOrder =[];
         let getValue=[];
-        let iti=[]
+        let iti=[];
+        let initialTargetCircleSize =[];
 
         function runTrial() {
             
@@ -435,7 +436,7 @@
             $('#fixation-screen').show();
             $('#slideContainer').hide();
             $('#submitButton').hide();
-            document.getElementById("myRange").value=10
+            
             
             
             // console.log(curTrial)
@@ -460,6 +461,7 @@
             curtrialStruct.rt = endTime();
             curtrialStruct.totalTimeUse = timeUse;
             curtrialStruct.totaliti= iti;
+            curtrialStruct.initialTargetCircleSize = initialTargetCircleSize;
             
             trialStruct.push(curtrialStruct);
             console.log(trialStruct);
@@ -477,7 +479,12 @@
                 
                 trialOrder = randomValueFromArray(totalSetArea)
                 console.log(trialOrder)
-                
+
+               ///Random reappeared target circle 
+                initialTargetCircleSize = generateRandom(10, 40)
+                document.getElementById("myRange").value= initialTargetCircleSize
+                // console.log(initialTargetCircleSize)
+
                 taskSequence.push(trialOrder)
                 console.log(taskSequence)
                 startTrial();
