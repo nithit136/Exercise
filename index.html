@@ -58,7 +58,7 @@
     </div>
 
     <div id="grid-container" class="grid-container">
-        <div id=box1; class="grid-item"></div>
+        <div id="box1"; class="grid-item"></div>
         <div id="box2"; class="grid-item"></div>
         <div id="box3"; class="grid-item"></div>
         <div id="box4"; class="grid-item"></div>
@@ -306,6 +306,8 @@
         
             boxSequence=[];
             boxSequence2=[];
+            //To get box order in each task
+            boxOrder = [];
             // console.log(boxSequence)
             setCircleX=[];
             setCircleY=[];    
@@ -346,7 +348,9 @@
                     circleY = generateRandom(65, 85)  
                     makeCircle('id',circleX,circleY, taskSize[i]*10 ,false,0,'#000000','#000000');
                     drawCircle(ctx,circle);    
-                    boxSequence.push(boxNum);  
+                    boxSequence.push(boxNum); 
+                    //Get box order
+                    boxOrder.push($(boxNum).attr('id')) 
                     setCircleX.push(circleX);
                     setCircleY.push(circleY); 
                     // console.log(setCircleX)
@@ -426,6 +430,7 @@
         let initialTargetCircleSize =[];
         let taskSize =[];
 
+        let boxOrder = [];
         //To random order of task
         let totalTrialSequence = [];
         for (let i=0; i<110; i++){
@@ -458,7 +463,7 @@
             var curtrialStruct = {};
             // need to edit these information
             curtrialStruct.curTrial = curTrial;
-            curtrialStruct.totalBoxSequence = boxSequence;
+            curtrialStruct.BoxOrder = boxOrder;
             curtrialStruct.totalSetCircleX = setCircleX;
             curtrialStruct.totalSetCircleY = setCircleY;
             curtrialStruct.totalGetValue = getValue.slice(-1);
