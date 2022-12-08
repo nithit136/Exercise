@@ -144,9 +144,13 @@
             return number * 1.2;})
         })
         
+        let setArea6 = setArea.map(function(subarray) {
+            return subarray.map(function(number) {
+            return number * 1.05;})
+        })
 
-        let totalSetArea = setArea.concat(setArea2, setArea3, setArea4, setArea5);
-        
+        let totalSetArea = setArea.concat(setArea2, setArea3, setArea4, setArea5, setArea6);
+        console.log(totalSetArea)
         
         function practiceFrame1() {
             // if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
@@ -433,7 +437,7 @@
         let boxOrder = [];
         //To random order of task
         let totalTrialSequence = [];
-        for (let i=0; i<110; i++){
+        for (let i=0; i<264; i++){
             trialRandomSequence = randomValueFromArray(totalSetArea);
             totalTrialSequence.push(trialRandomSequence);
         }
